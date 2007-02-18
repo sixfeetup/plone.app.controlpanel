@@ -15,6 +15,10 @@
       />
 
   <adapter
+      factory=".security.SecurityControlPanelAdapter"
+      />
+
+  <adapter
       factory=".types.TypesControlPanelAdapter"
       />
 
@@ -23,8 +27,8 @@
       />
 
   <adapter
-	  factory=".wickedcp.WickedControlPanelAdapter"
-	  />
+      factory=".wickedcp.WickedControlPanelAdapter"
+      />
 
   <browser:page
       name="wicked-controlpanel.html"
@@ -51,6 +55,13 @@
       name="search-controlpanel.html"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".search.SearchControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
+  <browser:page
+      name="security-controlpanel.html"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".security.SecurityControlPanelAdapter"
       permission="cmf.ManagePortal"
       />
 
