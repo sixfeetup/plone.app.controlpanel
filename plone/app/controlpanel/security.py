@@ -54,32 +54,40 @@ class SecurityControlPanelAdapter(SchemaAdapterBase):
     def __init__(self, context):
         super(SecurityControlPanelAdapter, self).__init__(context)
         pprop = getToolByName(context, 'portal_properties')
+        self.pmembership = getToolByName(context, 'portal_membership')
+        portal_url = getToolByName(context, "portal_url")
+        self.portal = portal_url.getPortalObject()
         self.context = pprop.site_properties
-        self.site_properties = pprop.site_properties
         
     def get_enable_self_reg(self):
-        return self.context.enable_self_reg
+        pass
 
     def set_enable_self_reg(self, value):
-        self.context.enable_self_reg = value
+        pass
 
     enable_self_reg = property(get_enable_self_reg, set_enable_self_reg)
 
 
     def get_enable_user_pwd_choice(self):
-        return self.context.site_properties.enable_user_pwd_choice
+        if self.portal.validate_email:
+            return False
+        else:
+            return True
 
     def set_enable_user_pwd_choice(self, value):
-        self.context.site_properties.enable_user_pwd_choice = value
+        if value == True:
+            self.portal.validate_email = False
+        else:
+            self.portal.validate_email = True
 
     enable_user_pwd_choice = property(get_enable_user_pwd_choice, set_enable_user_pwd_choice)
 
 
     def get_enable_user_folders(self):
-        return self.context.site_properties.enable_user_folders
+        return self.pmembership.getMemberareaCreationFlag()
 
     def set_enable_user_folders(self, value):
-        self.context.site_properties.enable_user_folders = value
+        self.pmembership.memberareaCreationFlag = value
 
     enable_user_folders = property(get_enable_user_folders, set_enable_user_folders)
 
