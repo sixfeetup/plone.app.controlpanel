@@ -59,11 +59,28 @@ class SecurityControlPanelAdapter(SchemaAdapterBase):
         self.portal = portal_url.getPortalObject()
         self.context = pprop.site_properties
         
+        from AccessControl.Role import RoleManager
+        
     def get_enable_self_reg(self):
-        pass
+        app_perms = self.portal.rolesOfPermission(permission='Add portal member')
+        for appperm in app_perms:
+            if appperm['name'] == 'Anonymous' and appperm['selected'] == 'SELECTED':
+                return True
+            else:
+                return False
 
     def set_enable_self_reg(self, value):
-        pass
+        app_perms = self.portal.rolesOfPermission(permission='Add portal member')
+        reg_roles = []
+        for appperm in app_perms:
+            if appperm['selected'] == 'SELECTED':
+                reg_roles.append(appperm['name'])
+        if value == True and 'Anonymous' not in reg_roles:
+            reg_roles.append('Anonymous')
+        if value == False and 'Anonymous' in reg_roles:
+            reg_roles.remove('Anonymous')
+            
+        self.portal.manage_permission('Add portal member', roles=reg_roles, acquire=0)
 
     enable_self_reg = property(get_enable_self_reg, set_enable_self_reg)
 
