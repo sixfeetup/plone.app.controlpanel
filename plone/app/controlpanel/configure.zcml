@@ -61,7 +61,7 @@
   <browser:page
       name="security-controlpanel.html"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".security.SecurityControlPanelAdapter"
+      class=".security.SecurityControlPanel"
       permission="cmf.ManagePortal"
       />
 
