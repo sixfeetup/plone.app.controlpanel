@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.2.0
+-----
+
+- Removed wiki related settings.
+  [hannosch]
+
 1.1.3
 -----
 
