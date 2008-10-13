@@ -3,6 +3,8 @@ from cgi import escape
 
 from plone.app.form.validators import null_validator
 from plone.fieldsets.form import FieldsetsEditForm
+from plone.protect import CheckAuthenticator
+
 from zope.component import adapts
 from zope.formlib import form
 from zope.interface import Interface
@@ -13,14 +15,12 @@ from AccessControl import getSecurityManager
 from AccessControl.Permissions import view_management_screens
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
 from plone.app.controlpanel.interfaces import IPloneControlPanelForm
-
-from plone.protect import CheckAuthenticator
+from plone.app.controlpanel.utils import SchemaAdapterBase
 
 
 class IMaintenanceSchema(Interface):

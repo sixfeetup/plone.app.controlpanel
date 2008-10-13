@@ -7,14 +7,14 @@ from zope.schema import Int
 from zope.schema import Tuple
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.formlib.schema import ProxyFieldProperty
-from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
-from form import ControlPanelForm
-from widgets import MultiCheckBoxVocabularyWidget
-from widgets import WeekdayWidget
+from plone.app.controlpanel.form import ControlPanelForm
+from plone.app.controlpanel.utils import ProxyFieldProperty
+from plone.app.controlpanel.utils import SchemaAdapterBase
+from plone.app.controlpanel.widgets import MultiCheckBoxVocabularyWidget
+from plone.app.controlpanel.widgets import WeekdayWidget
 
 
 class ICalendarSchema(Interface):

@@ -9,13 +9,14 @@ from zope.schema import TextLine
 from zope.schema import SourceText
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.formlib.schema import ProxyFieldProperty
-from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.utils import safe_unicode
 
-from form import ControlPanelForm
+from plone.app.controlpanel.form import ControlPanelForm
+from plone.app.controlpanel.utils import ProxyFieldProperty
+from plone.app.controlpanel.utils import SchemaAdapterBase
+
 
 class ISiteSchema(Interface):
 

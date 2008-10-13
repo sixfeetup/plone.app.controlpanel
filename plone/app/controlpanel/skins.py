@@ -4,17 +4,17 @@ from zope.formlib.form import FormFields
 from zope.interface import implements
 from zope.schema import Bool
 from zope.schema import Choice
+from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
-from form import ControlPanelForm
-from widgets import DropdownChoiceWidget
+from plone.app.controlpanel.form import ControlPanelForm
+from plone.app.controlpanel.utils import SchemaAdapterBase
+from plone.app.controlpanel.widgets import DropdownChoiceWidget
 
-from zope.schema.vocabulary import SimpleTerm
-from zope.schema.vocabulary import SimpleVocabulary
 
 ICON_VISIBILITY_CHOICES = {
     _(u"Only for users who are logged in"): 'authenticated',

@@ -9,12 +9,13 @@ from zope.app.form.browser import ObjectWidget
 from zope.app.form.browser import ListSequenceWidget
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.formlib.schema import SchemaAdapterBase
+
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.PortalTransforms.transforms.safe_html import VALID_TAGS
 
-from form import ControlPanelForm
+from plone.app.controlpanel.form import ControlPanelForm
+from plone.app.controlpanel.utils import SchemaAdapterBase
 
 XHTML_TAGS = set(
     'a abbr acronym address area b base bdo big blockquote body br '

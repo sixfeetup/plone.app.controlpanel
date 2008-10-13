@@ -1,6 +1,7 @@
 from plone.app.form.validators import null_validator
-from zope.app.cache.interfaces.ram import IRAMCache
+from plone.protect import CheckAuthenticator
 
+from zope.app.cache.interfaces.ram import IRAMCache
 from zope.interface import Interface
 from zope.component import adapts
 from zope.component import getMultiAdapter
@@ -11,16 +12,14 @@ from zope.schema import Int
 
 from Acquisition import aq_inner
 
-from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 
-from plone.app.controlpanel.form import ControlPanelForm
 from plone.app.controlpanel.form import _template
-
-from plone.protect import CheckAuthenticator
+from plone.app.controlpanel.form import ControlPanelForm
+from plone.app.controlpanel.utils import SchemaAdapterBase
 
 
 class IRAMCacheSchema(Interface):

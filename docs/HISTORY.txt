@@ -4,6 +4,9 @@ Changelog
 1.2.0
 -----
 
+- Copied over formlib helper function from CMF default, to avoid a dependency.
+  [hannosch]
+
 - Removed wiki related settings.
   [hannosch]
 

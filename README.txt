@@ -29,7 +29,7 @@ Following this approach a control panel consists of at least three classes:
 - An adapter implementing the above interface, exposing all the different
   settings as properties. As we don't want to have those control panels
   available all over the place, we restrict them to adapt the 'IPloneSiteRoot'
-  only. Sometimes we use the 'SchemaAdapterBase' class from CMFDefault.formlib
+  only. Sometimes we use the 'SchemaAdapterBase' class from our utils module
   and the property wrapper 'ProxyFieldProperty' to automatically convert the
   values found in our site to the types expected by formlib and vica versa.
   For example we often need to store tuples while formlib expects sets, store
