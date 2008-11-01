@@ -93,7 +93,6 @@ Make sure the changes have been applied correctly to the tool:
 Check the sitemap actually, should raise a 404:
 
     >>> self.browser.handleErrors = True
-    >>> from zope.publisher.interfaces import NotFound
     >>> from urllib2 import HTTPError
     >>> try:
     ...     self.browser.open("http://nohost/plone/sitemap.xml.gz")
