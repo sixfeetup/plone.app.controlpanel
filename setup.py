@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.1.3'
+version = '2.0'
 
 setup(name='plone.app.controlpanel',
       version=version,
@@ -24,7 +24,7 @@ setup(name='plone.app.controlpanel',
       zip_safe=False,
       install_requires=[
         'setuptools',
-        'plone.app.form>=1.1.1dev',
+        'plone.app.form',
         'plone.app.workflow',
         'plone.fieldsets',
         'plone.memoize',

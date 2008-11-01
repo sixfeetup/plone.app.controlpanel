@@ -1,8 +1,12 @@
 Changelog
 =========
 
-1.2.0
------
+2.0
+---
+
+- Removed the dependency on plone.app.form's named_template_adapter, as it
+  does not work with Zope 2.12.
+  [hannosch]
 
 - Changed the overview controlpanel to be named plone_control_panel.
   [hannosch]
