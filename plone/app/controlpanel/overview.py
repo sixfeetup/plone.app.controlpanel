@@ -3,8 +3,10 @@ from zope.i18n import translate
 
 from Acquisition import aq_base
 from Acquisition import aq_inner
+from Globals import DevelopmentMode
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.app.controlpanel.form import ControlPanelView
@@ -45,26 +47,43 @@ class OverviewControlPanel(ControlPanelView):
         return getToolByName(aq_inner(self.context), 'portal_actions')
 
     @memoize
-    def migration(self):
-        return getToolByName(aq_inner(self.context), 'portal_migration')
-
-    @memoize
     def core_versions(self):
-        return self.migration().coreVersions()
+        """ Useful core information """
+        context = aq_inner(self.context)
+        setup = getToolByName(context, 'portal_setup')
+
+        current_version = setup.getVersionForProfile(_DEFAULT_PROFILE)
+        available_version = setup.getLastVersionForProfile(_DEFAULT_PROFILE)
+        if isinstance(available_version, tuple):
+            available_version = '.'.join(available_version)
+
+        cp = context.Control_Panel
+        var = {}
+        var['Zope'] = cp.version_txt()
+        var['Python'] = cp.sys_version()
+        var['Platform'] = cp.sys_platform()
+        var['Plone Current Configuration'] = current_version
+        var['Plone Available Configuartion'] = available_version
+        var['CMF'] = cp.Products.CMFCore.version
+        var['Debug mode'] = DevelopmentMode and 'Yes' or 'No'
+        try:
+            from PIL.Image import VERSION
+        except ImportError:
+            VERSION = ''
+        var['PIL'] = VERSION
+        return var
 
     def pil(self):
         return 'PIL' in self.core_versions()
 
     def version_overview(self):
-        versions = [
-            'Plone ' + self.migration().getInstanceVersion(),
-        ]
         core_versions = self.core_versions()
-        for v in ('CMF', 'Zope', 'Python'):
+        plone = core_versions.get('Plone Current Configuration')
+        versions = [
+            'Plone ' + plone,
+        ]
+        for v in ('CMF', 'Zope', 'Python', 'PIL'):
             versions.append(v + ' ' + core_versions.get(v))
-        pil = core_versions.get('PIL', None)
-        if pil is not None:
-            versions.append('PIL ' + pil)
         return versions
 
     @memoize

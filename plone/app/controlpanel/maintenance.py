@@ -121,16 +121,6 @@ class MaintenanceControlPanel(FieldsetsEditForm):
             return True
         return False
 
-    def isDevelopmentMode(self):
-        qi = getToolByName(self.context, 'portal_quickinstaller')
-        return qi.isDevelopmentMode()
-
-    def coreVersions(self):
-        mt = getToolByName(self.context, 'portal_migration')
-        versions = mt.coreVersions()
-        versions['Instance'] = versions['Plone Instance']
-        return versions
-
     def processTime(self):
         context = aq_inner(self.context)
         cpanel = context.unrestrictedTraverse('/Control_Panel')

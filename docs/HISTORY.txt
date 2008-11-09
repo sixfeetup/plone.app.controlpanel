@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Removed a dependency on the migration tool for showing version information.
+  [hannosch]
+
 - Removed the dependency on plone.app.form's named_template_adapter, as it
   does not work with Zope 2.12.
   [hannosch]
