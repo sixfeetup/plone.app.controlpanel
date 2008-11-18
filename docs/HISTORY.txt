@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Added dependency declaration on zope.app.cache.
+  [hannosch]
+
 - Removed a dependency on the migration tool for showing version information.
   [hannosch]
 
