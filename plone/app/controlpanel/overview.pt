@@ -31,7 +31,7 @@
             <tal:link i18n:name="label_mail_control_panel_link">
                 <a href=""
                    i18n:translate="text_no_mailhost_configured_control_panel_link"
-                   tal:attributes="href string:${portal_url}/@@mail-controlpanel"
+                   tal:attributes="href string:${context/portal_url}/@@mail-controlpanel"
                 >Mail control panel</a>
             </tal:link>
             to fix this.
