@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Changed the plone_control_panel to be named overview-controlpanel.
+  [hannosch]
+
 - Added dependency declaration on zope.app.cache.
   [hannosch]
 
@@ -12,9 +15,6 @@ Changelog
 
 - Removed the dependency on plone.app.form's named_template_adapter, as it
   does not work with Zope 2.12.
-  [hannosch]
-
-- Changed the overview controlpanel to be named plone_control_panel.
   [hannosch]
 
 - Copied over formlib helper function from CMF default, to avoid a dependency.
