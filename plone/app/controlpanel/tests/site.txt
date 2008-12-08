@@ -21,7 +21,7 @@ Viewing the site control panel
 Click the cancel button:
 
     >>> self.browser.getControl(name="form.actions.cancel").click()
-    >>> self.browser.url.endswith('plone_control_panel')
+    >>> self.browser.url.endswith('@@overview-controlpanel')
     True
 
 There should be still no changes:

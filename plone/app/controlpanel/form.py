@@ -50,7 +50,7 @@ class ControlPanelForm(FieldsetsEditForm):
                                                       type="info")
         url = getMultiAdapter((self.context, self.request),
                               name='absolute_url')()
-        self.request.response.redirect(url + '/plone_control_panel')
+        self.request.response.redirect(url + '/@@overview-controlpanel')
         return ''
         
     def _on_save(self, data=None):

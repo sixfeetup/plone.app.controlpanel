@@ -167,7 +167,7 @@ type_id=%s' % (context.absolute_url() , type_id))
 
         elif cancel_button:
             self.request.response.redirect(self.context.absolute_url() + \
-                                           '/plone_control_panel')
+                                           '/@@overview-controlpanel')
             postback = False
 
         if postback:
