@@ -1,0 +1,49 @@
+Site control panel
+==================
+
+First some initial setup code:
+
+    >>> from zope.component import getUtility
+    >>> from Products.CMFCore.interfaces import IPropertiesTool
+    >>> ptool = getUtility(IPropertiesTool)
+    >>> self.loginAsManager()
+
+Viewing the types control panel
+-----------------------------
+
+Choose a standard type and hit cancel:
+
+    >>> self.browser.open('http://nohost/plone/@@types-controlpanel')
+    >>> self.browser.getControl(name='type_id').value = ['Link']
+    >>> self.browser.getControl('Cancel').click()
+
+We should be back on the Site Setup screen:
+
+    >>> 'plone_control_panel' in self.browser.url
+    True
+
+Navigate back to the type control panel and select link again:
+    
+    >>> self.browser.getLink('Types').click()
+    >>> self.browser.getControl(name='type_id').value = ['Link']
+    >>> self.browser.getForm(
+    ...     action='http://nohost/plone/@@types-controlpanel').submit()
+
+Enable allow commenting for the link type
+
+    >>> self.browser.getControl('Allow comments').selected = True
+    >>> self.browser.getControl('Apply Changes').click()
+    
+Navigate back to link type to confirm setting
+
+    >>> self.browser.getLink('Types').click()
+    >>> self.browser.getControl(name='type_id').value = ['Link']
+    >>> self.browser.getForm(
+    ...     action='http://nohost/plone/@@types-controlpanel').submit()
+    >>> self.browser.contents
+    '...<input id="allow_discussion"...
+    ...type="checkbox" class="noborder"...
+    ...name="allow_discussion:boolean"...
+    ...checked="checked">...
+    ...<label for="allow_discussion">...
+    ...Allow comments...'
