@@ -83,6 +83,12 @@ class ISiteSchema(Interface):
                         default=u'',
                         required=False)
 
+    lock_on_ttw_edit = Bool(title=_(u"Enable locking"),
+                          description=_(u""),
+                          default=True,
+                          required=False)
+
+
 
 class SiteControlPanelAdapter(SchemaAdapterBase):
 
@@ -132,6 +138,7 @@ class SiteControlPanelAdapter(SchemaAdapterBase):
     enable_link_integrity_checks = ProxyFieldProperty(ISiteSchema['enable_link_integrity_checks'])
     ext_editor = ProxyFieldProperty(ISiteSchema['ext_editor'])
     enable_sitemap = ProxyFieldProperty(ISiteSchema['enable_sitemap'])
+    lock_on_ttw_edit = ProxyFieldProperty(ISiteSchema['lock_on_ttw_edit'])
 
 
 class SmallTextAreaWidget(TextAreaWidget):
