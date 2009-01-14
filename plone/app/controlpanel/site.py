@@ -83,8 +83,11 @@ class ISiteSchema(Interface):
                         default=u'',
                         required=False)
 
-    lock_on_ttw_edit = Bool(title=_(u"Enable locking"),
-                          description=_(u""),
+    lock_on_ttw_edit = Bool(title=_(u"Enable locking for through-the-web edits"),
+                          description=_(u"Disabling locking here will only "
+                                "affect users editing content through the "
+                                "Plone web UI.  Content edited via WebDAV "
+                                "clients will still be subject to locking."),
                           default=True,
                           required=False)
 
