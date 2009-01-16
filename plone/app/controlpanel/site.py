@@ -1,6 +1,5 @@
 from zope.app.form.browser import TextAreaWidget
 from zope.interface import Interface
-from zope.component import adapts
 from zope.formlib.form import FormFields
 from zope.interface import implements
 from zope.schema import Bool
@@ -12,10 +11,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFDefault.formlib.schema import ProxyFieldProperty
 from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone import PloneMessageFactory as _
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.utils import safe_unicode
 
 from form import ControlPanelForm
+
+from plone.locking.interfaces import ILockSettings
 
 class ISiteSchema(Interface):
 
@@ -95,12 +95,11 @@ class ISiteSchema(Interface):
 
 class SiteControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
-    implements(ISiteSchema)
+    implements(ISiteSchema, ILockSettings)
 
     def __init__(self, context):
         super(SiteControlPanelAdapter, self).__init__(context)
-        self.portal = context
+        self.portal = getToolByName(context, 'portal_url').getPortalObject()
         pprop = getToolByName(self.portal, 'portal_properties')
         self.context = pprop.site_properties
         self.encoding = pprop.site_properties.default_charset
@@ -142,7 +141,6 @@ class SiteControlPanelAdapter(SchemaAdapterBase):
     ext_editor = ProxyFieldProperty(ISiteSchema['ext_editor'])
     enable_sitemap = ProxyFieldProperty(ISiteSchema['enable_sitemap'])
     lock_on_ttw_edit = ProxyFieldProperty(ISiteSchema['lock_on_ttw_edit'])
-
 
 class SmallTextAreaWidget(TextAreaWidget):
 
