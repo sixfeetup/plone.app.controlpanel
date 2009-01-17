@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Declared package dependencies on all packages.
+  [hannosch]
+
 - Changed the plone_control_panel to be named overview-controlpanel.
   [hannosch]
 
