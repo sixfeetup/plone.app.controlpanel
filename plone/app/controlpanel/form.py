@@ -5,13 +5,13 @@ from zope.event import notify
 from plone.fieldsets.form import FieldsetsEditForm
 from zope.formlib import form
 
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.app.form.validators import null_validator
 
+from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.events import ConfigurationChangedEvent
 from plone.app.controlpanel.interfaces import IPloneControlPanelView
 from plone.app.controlpanel.interfaces import IPloneControlPanelForm

@@ -8,8 +8,10 @@ from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
 from plone.app.form.widgets import MultiCheckBoxWidget
+
+from plone.app.controlpanel import PloneMessageFactory as _
+
 
 WEEKDAYS = (('Monday', 0),
             ('Tuesday', 1),

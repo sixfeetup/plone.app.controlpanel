@@ -9,10 +9,10 @@ from zope.schema import TextLine
 from zope.schema import SourceText
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.utils import safe_unicode
 
+from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
 from plone.app.controlpanel.utils import ProxyFieldProperty
 from plone.app.controlpanel.utils import SchemaAdapterBase

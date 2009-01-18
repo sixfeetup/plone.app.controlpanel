@@ -6,9 +6,9 @@ from zope.interface import implements
 from zope.schema import Choice
 from zope.schema import Tuple
 
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
+from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
 from plone.app.controlpanel.utils import SchemaAdapterBase
 from plone.app.controlpanel.widgets import AllowedTypesWidget

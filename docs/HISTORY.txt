@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Use our own PloneMessageFactory.
+  [hannosch]
+
 - Declared package dependencies on all packages.
   [hannosch]
 

@@ -7,11 +7,11 @@ from zope.schema import Choice
 from zope.schema import Tuple
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
 from plone.app.vocabularies.types import BAD_TYPES
 
+from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
 from plone.app.controlpanel.utils import SchemaAdapterBase
 from plone.app.controlpanel.widgets import MultiCheckBoxThreeColumnWidget

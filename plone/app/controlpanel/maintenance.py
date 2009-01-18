@@ -15,10 +15,10 @@ from AccessControl import getSecurityManager
 from AccessControl.Permissions import view_management_screens
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
+from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.interfaces import IPloneControlPanelForm
 from plone.app.controlpanel.utils import SchemaAdapterBase
 

@@ -10,10 +10,10 @@ from zope.app.form.browser import ListSequenceWidget
 
 from Products.CMFCore.utils import getToolByName
 
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.PortalTransforms.transforms.safe_html import VALID_TAGS
 
+from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
 from plone.app.controlpanel.utils import SchemaAdapterBase
 
