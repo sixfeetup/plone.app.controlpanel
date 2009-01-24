@@ -64,7 +64,6 @@ class OverviewControlPanel(ControlPanelView):
         var['Platform'] = cp.sys_platform()
         var['Plone Current Configuration'] = current_version
         var['Plone Available Configuartion'] = available_version
-        var['CMF'] = cp.Products.CMFCore.version
         var['Debug mode'] = DevelopmentMode and 'Yes' or 'No'
         try:
             from PIL.Image import VERSION
@@ -82,7 +81,7 @@ class OverviewControlPanel(ControlPanelView):
         versions = [
             'Plone ' + plone,
         ]
-        for v in ('CMF', 'Zope', 'Python', 'PIL'):
+        for v in ('Zope', 'Python', 'PIL'):
             versions.append(v + ' ' + core_versions.get(v))
         return versions
 

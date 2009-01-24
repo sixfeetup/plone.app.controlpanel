@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Removed CMF from the versions list in the overview screen.
+  [hannosch]
+
 - Use our own PloneMessageFactory.
   [hannosch]
 
