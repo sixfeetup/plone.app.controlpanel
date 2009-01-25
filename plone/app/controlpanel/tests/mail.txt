@@ -56,7 +56,7 @@ We should be informed that something has changed:
 Make sure the changes have been applied correctly to the mailhost:
 
     >>> mailhost.smtp_host
-    u'localhost2'
+    'localhost2'
 
     >>> mailhost.smtp_port
     2525
@@ -65,7 +65,7 @@ Make sure the changes have been applied correctly to the mailhost:
     u'admin'
 
     >>> mailhost.smtp_pwd
-    u'secret'
+    'secret'
 
     >>> self.site_props.email_from_name
     u'Spambot'
@@ -99,4 +99,4 @@ Make sure the changes have been applied correctly to the mailhost:
     u''
 
     >>> mailhost.smtp_pwd
-    u''
+    ''

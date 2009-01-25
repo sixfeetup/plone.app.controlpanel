@@ -12,7 +12,7 @@ from zope.schema import Int
 
 from Acquisition import aq_inner
 
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 
@@ -38,7 +38,7 @@ class IRAMCacheSchema(Interface):
 
 
 class RAMCacheControlPanelAdapter(SchemaAdapterBase):
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(IRAMCacheSchema)
 
     def get_max_entries(self):

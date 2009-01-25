@@ -6,7 +6,7 @@ from zope.interface import implements
 from zope.schema import Choice
 from zope.schema import Tuple
 
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 
 from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
@@ -54,7 +54,7 @@ class IMarkupSchema(ITextMarkupSchema):
 
 class MarkupControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(IMarkupSchema)
 
     def __init__(self, context):

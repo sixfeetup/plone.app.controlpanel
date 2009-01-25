@@ -15,7 +15,7 @@ from AccessControl import getSecurityManager
 from AccessControl.Permissions import view_management_screens
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
 from plone.app.controlpanel import PloneMessageFactory as _
@@ -37,7 +37,7 @@ class IMaintenanceSchema(Interface):
 
 class MaintenanceControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(IMaintenanceSchema)
 
     def __init__(self, context):

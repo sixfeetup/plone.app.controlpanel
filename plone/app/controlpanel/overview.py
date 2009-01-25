@@ -6,10 +6,11 @@ from Acquisition import aq_inner
 from Globals import DevelopmentMode
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from plone.app.controlpanel.form import ControlPanelView
+
+_DEFAULT_PROFILE = 'Products.CMFPlone:plone'
 
 
 def three_column_list(input_list):

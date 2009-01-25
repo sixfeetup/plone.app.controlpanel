@@ -10,7 +10,7 @@ from zope.app.form.browser import ListSequenceWidget
 
 from Products.CMFCore.utils import getToolByName
 
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 from Products.PortalTransforms.transforms.safe_html import VALID_TAGS
 
 from plone.app.controlpanel import PloneMessageFactory as _
@@ -105,7 +105,7 @@ class IFilterSchema(IFilterTagsSchema, IFilterAttributesSchema,
     """
 
 class FilterControlPanelAdapter(SchemaAdapterBase):
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(IFilterSchema)
 
     def __init__(self, context):

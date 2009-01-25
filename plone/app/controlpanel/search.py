@@ -7,7 +7,7 @@ from zope.schema import Choice
 from zope.schema import Tuple
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 
 from plone.app.vocabularies.types import BAD_TYPES
 
@@ -44,7 +44,7 @@ class ISearchSchema(Interface):
 
 class SearchControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(ISearchSchema)
 
     def __init__(self, context):

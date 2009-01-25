@@ -10,7 +10,7 @@ from zope.schema import Choice
 from Acquisition import aq_inner
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.app.controlpanel import PloneMessageFactory as _
@@ -41,7 +41,7 @@ class ILanguageSelectionSchema(Interface):
 
 class LanguageControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(ILanguageSelectionSchema)
 
     def __init__(self, context):

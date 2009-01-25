@@ -28,98 +28,98 @@
 
   <browser:page
       name="calendar-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".calendar.CalendarControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="filter-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".filter.FilterControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="language-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".language.LanguageControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="mail-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".mail.MailControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="markup-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".markup.MarkupControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="maintenance-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".maintenance.MaintenanceControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="overview-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".overview.OverviewControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="ramcache-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".ram.RAMCacheControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="search-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".search.SearchControlPanel"
       permission="cmf.ManagePortal"
       />
       
   <browser:page
       name="security-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".security.SecurityControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="site-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".site.SiteControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="skins-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".skins.SkinsControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="types-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".types.TypesControlPanel"
       permission="cmf.ManagePortal"
       />
 
   <browser:page
       name="usergroup-controlpanel"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".usergroups.UserGroupsSettingsControlPanel"
       permission="cmf.ManagePortal"
       />

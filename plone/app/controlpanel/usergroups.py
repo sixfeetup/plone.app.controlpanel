@@ -5,7 +5,7 @@ from zope.interface import implements
 from zope.schema import Bool
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 
 from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
@@ -38,7 +38,7 @@ class IUserGroupsSettingsSchema(Interface):
 
 class UserGroupsSettingsControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(IUserGroupsSettingsSchema)
 
     def __init__(self, context):

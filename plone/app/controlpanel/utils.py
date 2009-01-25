@@ -29,7 +29,7 @@ class SchemaAdapterBase(object):
         self.encoding = None
         ptool = queryUtility(IPropertiesTool)
         if ptool is not None:
-            self.encoding = ptool.getProperty('default_charset', None)
+            self.encoding = ptool.getProperty('default_charset', 'utf-8')
 
 
 class IFileUpload(IField):

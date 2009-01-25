@@ -5,7 +5,7 @@ from zope.interface import implements
 from zope.schema import Bool
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.CMFCore.interfaces import ISiteRoot
 
 from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
@@ -49,7 +49,7 @@ own passwords'),
 
 class SecurityControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(ISecuritySchema)
 
     def __init__(self, context):

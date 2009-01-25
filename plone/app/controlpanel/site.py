@@ -9,8 +9,7 @@ from zope.schema import TextLine
 from zope.schema import SourceText
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFCore.interfaces import ISiteRoot
 
 from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
@@ -78,7 +77,7 @@ class ISiteSchema(Interface):
 
 class SiteControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(IPloneSiteRoot)
+    adapts(ISiteRoot)
     implements(ISiteSchema)
 
     def __init__(self, context):
@@ -90,14 +89,18 @@ class SiteControlPanelAdapter(SchemaAdapterBase):
 
     def get_site_title(self):
         title = getattr(self.portal, 'title', u'')
-        return safe_unicode(title)
+        if not isinstance(title, unicode):
+            title = title.decode(self.encoding, 'replace')
+        return title
 
     def set_site_title(self, value):
         self.portal.title = value.encode(self.encoding)
 
     def get_site_description(self):
         description = getattr(self.portal, 'description', u'')
-        return safe_unicode(description)
+        if not isinstance(description, unicode):
+            description = description.decode(self.encoding, 'replace')
+        return description
 
     def set_site_description(self, value):
         if value is not None:
@@ -106,8 +109,10 @@ class SiteControlPanelAdapter(SchemaAdapterBase):
             self.portal.description = ''
 
     def get_webstats_js(self):
-        description = getattr(self.context, 'webstats_js', u'')
-        return safe_unicode(description)
+        webstats = getattr(self.context, 'webstats_js', u'')
+        if not isinstance(webstats, unicode):
+            webstats = webstats.decode(self.encoding, 'replace')
+        return webstats
 
     def set_webstats_js(self, value):
         if value is not None:

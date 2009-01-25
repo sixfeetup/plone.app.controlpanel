@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Removed any direct dependency on CMFPlone.
+  [hannosch]
+
 - Adjusted the mail control panel to work with a standard mail host.
   [hannosch]
 
