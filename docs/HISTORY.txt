@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Adjusted the mail control panel to work with a standard mail host.
+  [hannosch]
+
 - Removed CMF from the versions list in the overview screen.
   [hannosch]
 

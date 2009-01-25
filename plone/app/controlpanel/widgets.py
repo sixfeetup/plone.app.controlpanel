@@ -1,13 +1,14 @@
 from zope.app.form.browser import MultiSelectWidget
 from zope.app.form.browser import DropdownWidget
+from zope.app.form.browser.textwidgets import TextWidget
 from zope.app.form.browser.widget import renderElement
+from zope.app.form.interfaces import ConversionError
 from zope.component import getMultiAdapter
 from zope.component import queryMultiAdapter
 from zope.schema.interfaces import ITitledTokenizedTerm
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
-from Products.CMFCore.utils import getToolByName
 from plone.app.form.widgets import MultiCheckBoxWidget
 
 from plone.app.controlpanel import PloneMessageFactory as _
@@ -20,6 +21,24 @@ WEEKDAYS = (('Monday', 0),
             ('Friday', 4),
             ('Saturday', 5),
             ('Sunday', 6))
+
+
+class PasswordWidget(TextWidget):
+    """A very simple password widget. The password widget from zope.app.form
+    tries to be clever and makes it impossible to delete a value once one
+    has been set.
+    """
+
+    type = 'password'
+
+    def _toFieldValue(self, input):
+        if input is None:
+            input = u''
+        try:
+            value = unicode(input)
+        except ValueError, v:
+            raise ConversionError(_("Invalid text data"), v)
+        return value
 
 
 class DropdownChoiceWidget(DropdownWidget):
