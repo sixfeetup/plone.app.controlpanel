@@ -1,3 +1,4 @@
+from zope.app.component.hooks import getSite
 from zope.app.form.browser import TextAreaWidget
 from zope.interface import Interface
 from zope.formlib.form import FormFields
@@ -99,7 +100,7 @@ class SiteControlPanelAdapter(SchemaAdapterBase):
 
     def __init__(self, context):
         super(SiteControlPanelAdapter, self).__init__(context)
-        self.portal = getToolByName(context, 'portal_url').getPortalObject()
+        self.portal = getSite()
         pprop = getToolByName(self.portal, 'portal_properties')
         self.context = pprop.site_properties
         self.encoding = pprop.site_properties.default_charset
