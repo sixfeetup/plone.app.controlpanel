@@ -1,8 +1,7 @@
 from zope.interface import Interface
 from zope.component import adapts
-from zope.formlib.form import FormFields
 from zope.interface import implements
-from zope.schema import Bool, Tuple
+from zope.schema import Bool
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.interfaces import ISiteRoot
@@ -15,7 +14,10 @@ from plone.app.controlpanel.utils import SchemaAdapterBase
 from plone.fieldsets.fieldsets import FormFieldsets
 
 from joinpolicyschema import UserDataWidget, IJoinPolicySchema
-from security import ISecuritySchema, SecurityControlPanelAdapter
+
+
+# Property as it is named in site_properties
+JOIN_FORM_FIELDS='join_form_fields'
 
 
 class IUserGroupsSettingsSchema(Interface):
@@ -41,7 +43,8 @@ class IUserGroupsSettingsSchema(Interface):
                       default=False)
 
 
-class ICombinedSchema(IUserGroupsSettingsSchema, IJoinPolicySchema): #, ISecuritySchema):
+class ICombinedSchema(IUserGroupsSettingsSchema, IJoinPolicySchema):
+    
     """Combined schema for the adapter lookup.
     """
 
@@ -59,16 +62,16 @@ class UserGroupsSettingsControlPanelAdapter(SchemaAdapterBase):
     many_users = ProxyFieldProperty(IUserGroupsSettingsSchema['many_users'])
 
 
-    def set_joinfields(self, value):
+    def set_joinformfields(self, value):
 
-        self.context._updateProperty('joinfields', value)
+        self.context._updateProperty(JOIN_FORM_FIELDS, value)
 
 
-    def get_joinfields(self):
+    def get_joinformfields(self):
 
-        return self.context.getProperty('joinfields')
+        return self.context.getProperty(JOIN_FORM_FIELDS)
 
-    joinfields = property(get_joinfields, set_joinfields)
+    join_form_fields = property(get_joinformfields, set_joinformfields)
 
     
 
@@ -78,13 +81,16 @@ joinpolicyset.label = _(u'label_joinpolicy', default=u'Join policy')
 
 usergroupssettingsset = FormFieldsets(IUserGroupsSettingsSchema)
 usergroupssettingsset.id = 'usergroupssettings'
-usergroupssettingsset.label = _(u'label_usergroupssettings', default=u'Usergroupssettings')
+usergroupssettingsset.label = _(u'label_usergroupssettings', default=u'User groups settings')
+
 
 class UserGroupsSettingsControlPanel(ControlPanelForm):
 
+    """ Form that unifies two fieldsets into one form """
+    
     form_fields = FormFieldsets(usergroupssettingsset, joinpolicyset)
 
-    form_fields['joinfields'].custom_widget = UserDataWidget
+    form_fields['join_form_fields'].custom_widget = UserDataWidget
 
     label = _("User/Groups settings")
     description = _("User and groups settings for this site.")
