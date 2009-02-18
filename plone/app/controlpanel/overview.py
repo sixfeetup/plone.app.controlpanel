@@ -88,8 +88,7 @@ class OverviewControlPanel(ControlPanelView):
 
     @memoize
     def is_dev_mode(self):
-        qi = getToolByName(aq_inner(self.context), 'portal_quickinstaller')
-        return qi.isDevelopmentMode()
+        return bool(DevelopmentMode)
 
     def mailhost_warning(self):
         mailhost = getToolByName(aq_inner(self.context), 'MailHost', None)
