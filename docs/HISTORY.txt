@@ -4,6 +4,10 @@ Changelog
 2.0
 ---
 
+- Reduced the filter control panel to the functionality given by the
+  safe_html transform.
+  [hannosch]
+
 - Removed any direct dependency on CMFPlone.
   [hannosch]
 

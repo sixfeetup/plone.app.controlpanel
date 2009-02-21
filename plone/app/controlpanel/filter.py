@@ -1,12 +1,8 @@
-from plone.fieldsets.fieldsets import FormFieldsets
-
-from zope.interface import Interface
 from zope.component import adapts
+from zope.formlib import form
 from zope.interface import implements
+from zope.interface import Interface
 from zope import schema
-from zope.app.form import CustomWidgetFactory
-from zope.app.form.browser import ObjectWidget
-from zope.app.form.browser import ListSequenceWidget
 
 from Products.CMFCore.utils import getToolByName
 
@@ -63,44 +59,7 @@ class IFilterTagsSchema(Interface):
         required=False)
 
 
-class IFilterAttributesSchema(Interface):
-    stripped_attributes = schema.List(
-        title=_(u'Stripped attributes'),
-        description=_(u"These attributes are stripped from any tag when "
-                      "saving."),
-        default=(u'dir lang valign halign border frame rules cellspacing '
-                 'cellpadding bgcolor').split(),
-        value_type=schema.TextLine(),
-        required=False)
-
-    stripped_combinations = schema.List(
-        title=_(u'Stripped combinations'),
-        description=_(u"These attributes are stripped from any tag when "
-                      "saving."),
-        default=[],
-        #default=u'dir lang valign halign border frame rules cellspacing cellpadding bgcolor'.split()
-        value_type=schema.Object(ITagAttrPair, title=u"combination"),
-        required=False)
-
-class IFilterEditorSchema(Interface):
-    style_whitelist = schema.List(
-        title=_(u'Permitted styles'),
-        description=_(u'These CSS styles are allowed in style attributes.'),
-        default=u'text-align list-style-type float'.split(),
-        value_type=schema.TextLine(),
-        required=False)
-
-    class_blacklist = schema.List(
-        title=_(u'Filtered classes'),
-        description=_(u'These class names are not allowed in class '
-                      'attributes.'),
-        default=[],
-        value_type=schema.TextLine(),
-        required=False)
-
-
-class IFilterSchema(IFilterTagsSchema, IFilterAttributesSchema,
-                    IFilterEditorSchema):
+class IFilterSchema(IFilterTagsSchema):
     """Combined schema for the adapter lookup.
     """
 
@@ -113,7 +72,6 @@ class FilterControlPanelAdapter(SchemaAdapterBase):
         self.context = context
         self.transform = getattr(
             getToolByName(context, 'portal_transforms'), 'safe_html')
-        self.kupu_tool = getToolByName(context, 'kupu_library_tool')
 
     def _settransform(self, **kwargs):
         # Cannot pass a dict to set transform parameters, it has
@@ -169,7 +127,6 @@ class FilterControlPanelAdapter(SchemaAdapterBase):
                 if v in valid:
                     del valid[v]
             self._settransform(valid_tags=valid)
-            self.kupu_tool.set_stripped_tags(value)
 
         return property(get, set_)
 
@@ -195,68 +152,9 @@ class FilterControlPanelAdapter(SchemaAdapterBase):
         return property(get, set_)
 
 
-    @apply
-    def style_whitelist():
-        def get(self):
-            return self.kupu_tool.getStyleWhitelist()
-        def set(self, value):
-            self.kupu_tool.style_whitelist = list(value)
-        return property(get, set)
-
-    @apply
-    def class_blacklist():
-        '''Ideally the form should allow setting a class whitelist,
-        but that will have to be added later.'''
-        def get(self):
-            return  self.kupu_tool.getClassBlacklist()
-        def set(self, value):
-            self.kupu_tool.class_blacklist = list(value)
-        return property(get, set)
-
-    @apply
-    def stripped_attributes():
-        def get(self):
-            return self.kupu_tool.get_stripped_attributes()
-        def set(self, value):
-            self.kupu_tool.set_stripped_attributes(value)
-        return property(get, set)
-
-    @apply
-    def stripped_combinations():
-        def get(self):
-            return  [TagAttrPair(' '.join(t),' '.join(a)) for (t,a) in \
-                     self.kupu_tool.get_stripped_combinations()]
-        def set(self, value):
-            stripped = []
-            for ta in value:
-                tags = ta.tags.replace(',', ' ').split()
-                attributes = ta.attributes.replace(',', ' ').split()
-                stripped.append((tags,attributes))
-
-            self.kupu_tool.set_stripped_combinations(stripped)
-        return property(get, set)
-
-
-filtertagset = FormFieldsets(IFilterTagsSchema)
-filtertagset.id = 'filtertags'
-filtertagset.label = _(u'label_filtertags', default=u'Tags')
-
-filterattributes = FormFieldsets(IFilterAttributesSchema)
-filterattributes.id = 'filterattributes'
-filterattributes.label = _(u'label_filterattributes', default=u'Attributes')
-
-filtereditor = FormFieldsets(IFilterEditorSchema)
-filtereditor.id = 'filtereditor'
-filtereditor.label = _(u'filterstyles', default=u'Styles')
-
-tagattr_widget = CustomWidgetFactory(ObjectWidget, TagAttrPair)
-combination_widget = CustomWidgetFactory(ListSequenceWidget,
-                                         subwidget=tagattr_widget)
-
 class FilterControlPanel(ControlPanelForm):
 
-    form_fields = FormFieldsets(filtertagset, filterattributes, filtereditor)
-    form_fields['stripped_combinations'].custom_widget = combination_widget
+    form_fields = form.FormFields(IFilterTagsSchema)
 
     label = _("HTML Filter settings")
     description = _("Plone filters HTML tags that are considered security "

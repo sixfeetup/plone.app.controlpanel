@@ -53,8 +53,7 @@ Following this approach a control panel consists of at least three classes:
 
 While the above-mentioned works pretty well for simple cases it is not yet clear
 if it will work for complex control panels in the same way. Especially forms
-that use a multitude of actions (for example user/group management) or consist
-of more than one 'tab' (for example kupu but also smart folder settings) are not
+that use a multitude of actions (for example user/group management) are not
 easily implemented so far.
 
 Hopefully we will be able to provide common helper classes and templates for
