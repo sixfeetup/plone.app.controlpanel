@@ -37,7 +37,7 @@ class OverviewControlPanel(ControlPanelView):
     template = ViewPageTemplateFile('overview.pt')
 
     base_category = 'controlpanel'
-    ignored_categories = ('controlpanel_user')
+    ignored_category = 'controlpanel_user'
 
     def __call__(self):
         self.request.set('disable_border', 1)
@@ -104,8 +104,8 @@ class OverviewControlPanel(ControlPanelView):
         root = self.action().get(self.base_category, None)
         if root is None:
             return ()
-        category_ids = [i for i in root.objectIds()
-                          if i not in self.ignored_categories]
+        category_ids = [i for i in root
+                          if i != self.ignored_category]
         def _title(id):
             title = root[c].getProperty('title')
             domain = root[c].getProperty('i18n_domain', 'plone')
@@ -113,8 +113,8 @@ class OverviewControlPanel(ControlPanelView):
         return [dict(id=c, title=_title(c)) for c in category_ids]
 
     def sublists(self, category):
-        categories = self.base_category + '/' + category
-        actions = self.action().listActionInfos(categories=categories)
+        category = self.base_category + '/' + category
+        actions = self.action().listActionInfos(category=category)
         def _title(v):
             return translate(v.get('title'),
                              domain='plone',

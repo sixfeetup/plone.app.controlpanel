@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Adjust to singular category argument for the actions tool.
+  [hannosch]
+
 - Reduced the filter control panel to the functionality given by the
   safe_html transform.
   [hannosch]
