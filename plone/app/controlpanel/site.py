@@ -1,6 +1,6 @@
+from zope.app.component.hooks import getSite
 from zope.app.form.browser import TextAreaWidget
 from zope.interface import Interface
-from zope.component import adapts
 from zope.formlib.form import FormFields
 from zope.interface import implements
 from zope.schema import Bool
@@ -9,13 +9,13 @@ from zope.schema import TextLine
 from zope.schema import SourceText
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.interfaces import ISiteRoot
 
 from plone.app.controlpanel import PloneMessageFactory as _
 from plone.app.controlpanel.form import ControlPanelForm
 from plone.app.controlpanel.utils import ProxyFieldProperty
 from plone.app.controlpanel.utils import SchemaAdapterBase
 
+from plone.locking.interfaces import ILockSettings
 
 class ISiteSchema(Interface):
 
@@ -74,15 +74,23 @@ class ISiteSchema(Interface):
                         default=u'',
                         required=False)
 
+    lock_on_ttw_edit = Bool(title=_(u"Enable locking for through-the-web edits"),
+                          description=_(u"Disabling locking here will only "
+                                "affect users editing content through the "
+                                "Plone web UI.  Content edited via WebDAV "
+                                "clients will still be subject to locking."),
+                          default=True,
+                          required=False)
+
+
 
 class SiteControlPanelAdapter(SchemaAdapterBase):
 
-    adapts(ISiteRoot)
-    implements(ISiteSchema)
+    implements(ISiteSchema, ILockSettings)
 
     def __init__(self, context):
         super(SiteControlPanelAdapter, self).__init__(context)
-        self.portal = context
+        self.portal = getSite()
         pprop = getToolByName(self.portal, 'portal_properties')
         self.context = pprop.site_properties
         self.encoding = pprop.site_properties.default_charset
@@ -128,7 +136,7 @@ class SiteControlPanelAdapter(SchemaAdapterBase):
     enable_inline_editing = ProxyFieldProperty(ISiteSchema['enable_inline_editing'])
     enable_link_integrity_checks = ProxyFieldProperty(ISiteSchema['enable_link_integrity_checks'])
     enable_sitemap = ProxyFieldProperty(ISiteSchema['enable_sitemap'])
-
+    lock_on_ttw_edit = ProxyFieldProperty(ISiteSchema['lock_on_ttw_edit'])
 
 class SmallTextAreaWidget(TextAreaWidget):
 
