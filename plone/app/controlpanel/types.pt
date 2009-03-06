@@ -118,7 +118,7 @@
                     </tal:block>
                 </div>
 
-                <div class="field">
+                <div class="field" tal:condition="context/portal_repository|nothing">
                     <label for="versionpolicy" i18n:translate="types_controlpanel_versionpolicy">
                         Versioning policy: 
                     </label>

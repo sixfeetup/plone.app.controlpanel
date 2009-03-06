@@ -20,7 +20,7 @@ Choose a standard type and hit cancel:
 
 We should be back on the Site Setup screen:
 
-    >>> 'plone_control_panel' in self.browser.url
+    >>> self.browser.url.endswith('@@overview-controlpanel')
     True
 
 Navigate back to the type control panel and select link again:
@@ -37,7 +37,7 @@ Enable allow commenting for the link type
 Navigate back to link type to confirm setting.  Also confirm that the
 redirect_links setting is enabled:
 
-    >>> self.browser.getLink('Types').click()
+    >>> self.browser.open(types_configlet_url)
     >>> self.browser.getControl(name='type_id').value = ['Link']
     >>> self.browser.getForm(action=types_configlet_url).submit()
     >>> self.browser.contents

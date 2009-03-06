@@ -74,8 +74,11 @@ class TypesControlPanel(ControlPanelView):
         if submitted and not cancel_button:
             if type_id:
                 portal_types = getToolByName(self.context, 'portal_types')
-                portal_repository = getToolByName(self.context,
+                try:
+                    portal_repository = getToolByName(self.context,
                                                   'portal_repository')
+                except AttributeError:
+                    portal_repository = None
                 portal_properties = getToolByName(self.context,
                                                   'portal_properties')
                 site_properties = getattr(portal_properties, 'site_properties')
@@ -91,7 +94,7 @@ class TypesControlPanel(ControlPanelView):
                                             allow_discussion = bool(allow_discussion))
 
                 version_policy = form.get('versionpolicy', "off")
-                if version_policy!=self.current_versioning_policy():
+                if portal_repository is not None and version_policy!=self.current_versioning_policy():
                     newpolicy=[p for p in VERSION_POLICIES if p["id"]==version_policy][0]
 
 
@@ -212,7 +215,10 @@ type_id=%s' % (context.absolute_url() , type_id))
         return self.fti.getProperty('allow_discussion', False)
 
     def current_versioning_policy(self):
-        portal_repository = getToolByName(self.context, 'portal_repository')
+        try:
+            portal_repository = getToolByName(self.context, 'portal_repository')
+        except AttributeError:
+            return None
         if self.type_id not in portal_repository.getVersionableContentTypes():
             return "off"
         policy = set(portal_repository.getPolicyMap().get(self.type_id, ()))
