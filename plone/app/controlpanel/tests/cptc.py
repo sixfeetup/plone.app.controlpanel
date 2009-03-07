@@ -14,12 +14,9 @@ class ControlPanelTestCase(FunctionalTestCase):
 
     def afterSetUp(self):
         super(ControlPanelTestCase, self).afterSetUp()
-                
         self.browser = Browser()
-        
         self.uf = self.portal.acl_users
         self.uf.userFolderAddUser('root', 'secret', ['Manager'], [])
-        
         self.ptool = getToolByName(self.portal, 'portal_properties')
         self.site_props = self.ptool.site_properties
 
