@@ -33,6 +33,13 @@
   <adapter factory=".usergroups.UserGroupsSettingsControlPanelAdapter" />
 
   <browser:page
+      name="addon-controlpanel"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      class=".addon.AddonControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
+  <browser:page
       name="calendar-controlpanel"
       for="Products.CMFCore.interfaces.ISiteRoot"
       class=".calendar.CalendarControlPanel"

@@ -4,7 +4,12 @@ Changelog
 2.0
 ---
 
-- Don't show versioning setting on types configlet if CMFEditions is not present.
+- Added a simple dummy add-on management screen.
+  [hannosch]
+
+- Don't show versioning setting on types configlet if CMFEditions is not
+  present.
+  [davisagli]
 
 - Adjust to singular category argument for the actions tool.
   [hannosch]
