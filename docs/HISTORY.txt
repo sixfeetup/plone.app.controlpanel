@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Removed the no longer needed calendar control panel.
+  [hannosch]
+
 - Added a simple dummy add-on management screen.
   [hannosch]
 

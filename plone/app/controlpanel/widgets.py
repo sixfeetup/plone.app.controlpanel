@@ -3,11 +3,8 @@ from zope.app.form.browser import DropdownWidget
 from zope.app.form.browser.textwidgets import TextWidget
 from zope.app.form.browser.widget import renderElement
 from zope.app.form.interfaces import ConversionError
-from zope.component import getMultiAdapter
 from zope.component import queryMultiAdapter
 from zope.schema.interfaces import ITitledTokenizedTerm
-from zope.schema.vocabulary import SimpleTerm
-from zope.schema.vocabulary import SimpleVocabulary
 
 from plone.app.form.widgets import MultiCheckBoxWidget
 
@@ -309,27 +306,6 @@ class MultiSelectTupleWidget(MultiSelectWidget):
         if isinstance(value, list):
             value = tuple(value)
         return value
-
-
-def WeekdayWidget(field, request):
-    """A widget for the selection of weekdays."""
-    weekdays = WEEKDAYS
-    locale = None
-    context = getattr(field, 'context', None)
-    if context is not None:
-        context = getattr(context, 'context', None)
-        if context is not None:
-            portal_state = getMultiAdapter((context, request),
-                                           name=u'plone_portal_state')
-            locale = portal_state.locale()
-    if locale is not None:
-        # We probably shouldn't assume a gregorian calendar here, but the rest
-        # of our stack doesn't support anything else anyways for now.
-        gregorian = locale.dates.calendars.get('gregorian')
-        weekdays = tuple(zip(gregorian.getDayNames(), range(0, 8)))
-
-    terms = [SimpleTerm(item[1], title=item[0]) for item in weekdays]
-    return DropdownWidget(field, SimpleVocabulary(terms), request)
 
 
 class AllowedTypesWidget(MultiCheckBoxWidget):
