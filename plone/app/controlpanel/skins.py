@@ -53,8 +53,8 @@ class ISkinsSchema(Interface):
 
     icon_visibility = Choice(title=_(u'Show content type icons'),
                              description=_(u"If disabled the content icons "
-                                            "in folder listings and portlets "
-                                            "won't be visible."),
+                                            "in folder listings won't be "
+                                            "visible."),
                              vocabulary=ICON_VISIBILITY_VOCABULARY)
 
 

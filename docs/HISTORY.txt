@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Removed dependency on plone.portlets.
+  [hannosch]
+
 - Removed the no longer needed calendar control panel.
   [hannosch]
 
