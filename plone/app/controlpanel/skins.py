@@ -79,7 +79,8 @@ class SkinsControlPanelAdapter(SchemaAdapterBase):
     theme = property(get_theme, set_theme)
 
     def _update_jsreg_mark_special(self):
-        self.jstool.getResource('mark_special_links.js').setEnabled(
+        jsname = '++resource++plone.app.javascript.mark_special_links.js'
+        self.jstool.getResource(jsname).setEnabled(
             self.mark_special_links or self.ext_links_open_new_window
             )
         self.jstool.cookResources()
@@ -89,8 +90,6 @@ class SkinsControlPanelAdapter(SchemaAdapterBase):
         if msl == 'true':
             return True
         return False
-        
-        # return self.jstool.getResource('mark_special_links.js').getEnabled()
 
     def set_mark_special_links(self, value):
         if value:

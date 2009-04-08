@@ -69,8 +69,11 @@ External link marking and windows settings are also controlled here
 
 We should be starting with mark_special_links.js disabled:
 
+    >>> jsname = '++resource++plone.app.javascript.mark_special_links.js'
     >>> jstool = getToolByName(self.portal, 'portal_javascripts')
-    >>> jstool.getResource('mark_special_links.js').getEnabled()
+    >>> jstool.getResource(jsname).setEnabled(False)
+
+    >>> jstool.getResource(jsname).getEnabled()
     False
    
 The mark_special_links and ext_links_open_new_window properties should also
@@ -101,7 +104,7 @@ Checking mark_special_items should enable the js support and set the site prop:
     >>> site_props.mark_special_links
     'true'
     
-    >>> jstool.getResource('mark_special_links.js').getEnabled()
+    >>> jstool.getResource(jsname).getEnabled()
     True
 
 Checking ext_links_open_new_window should enable the js support and set the site prop:
@@ -111,7 +114,7 @@ Checking ext_links_open_new_window should enable the js support and set the site
     >>> site_props.external_links_open_new_window
     'true'
 
-    >>> jstool.getResource('mark_special_links.js').getEnabled()
+    >>> jstool.getResource(jsname).getEnabled()
     True
 
 Unchecking mark_special_links while new_window is set should leave the js
@@ -122,7 +125,7 @@ support in place since it's needed to support new_window:
     >>> site_props.mark_special_links
     'false'
 
-    >>> jstool.getResource('mark_special_links.js').getEnabled()
+    >>> jstool.getResource(jsname).getEnabled()
     True
 
 Unchecking new_window should finally turn off the js support:
@@ -132,5 +135,5 @@ Unchecking new_window should finally turn off the js support:
     >>> site_props.external_links_open_new_window
     'false'
 
-    >>> jstool.getResource('mark_special_links.js').getEnabled()
+    >>> jstool.getResource(jsname).getEnabled()
     False

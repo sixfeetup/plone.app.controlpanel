@@ -58,12 +58,13 @@ class SearchControlPanelAdapter(SchemaAdapterBase):
         return self.context.enable_livesearch
 
     def set_enable_livesearch(self, value):
+        jsname = '++resource++plone.app.javascript.livesearch.js'
         if value:
             self.context.manage_changeProperties(enable_livesearch=True)
-            self.jstool.getResource('livesearch.js').setEnabled(True)
+            self.jstool.getResource(jsname).setEnabled(True)
         else:
             self.context.manage_changeProperties(enable_livesearch=False)
-            self.jstool.getResource('livesearch.js').setEnabled(False)
+            self.jstool.getResource(jsname).setEnabled(False)
         self.jstool.cookResources()
 
     enable_livesearch = property(get_enable_livesearch, set_enable_livesearch)

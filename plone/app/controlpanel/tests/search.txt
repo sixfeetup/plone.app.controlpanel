@@ -64,7 +64,8 @@ Make sure the changes have been applied correctly to the tool:
     >>> self.site_props.enable_livesearch
     False
 
-    >>> jstool.getResource('livesearch.js').getEnabled()
+    >>> jsname = '++resource++plone.app.javascript.livesearch.js'
+    >>> jstool.getResource(jsname).getEnabled()
     False
 
     >>> 'Event' not in self.site_props.types_not_searched
