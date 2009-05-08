@@ -25,7 +25,6 @@ setup(name='plone.app.controlpanel',
       extras_require=dict(
         test=[
             'zope.publisher',
-            'Products.Archetypes',
             'Products.PloneTestCase',
         ]
       ),
@@ -48,6 +47,7 @@ setup(name='plone.app.controlpanel',
         'zope.schema',
         'zope.app.cache',
         'zope.app.form',
+        'Products.Archetypes',
         'Products.CMFCore',
         'Products.PortalTransforms',
         'Products.statusmessages',

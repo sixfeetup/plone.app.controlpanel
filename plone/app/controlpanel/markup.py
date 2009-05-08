@@ -30,7 +30,7 @@ class ITextMarkupSchema(Interface):
                        "created content objects."),
         default=u'text/html',
         missing_value=set(),
-        vocabulary="plone.app.vocabularies.AllowableContentTypes",
+        vocabulary="Products.Archetypes.AllowableContentTypes",
         required=True)
 
     allowed_types = Tuple(title=_(u'Alternative formats'),
@@ -42,7 +42,7 @@ class ITextMarkupSchema(Interface):
         required=True,
         missing_value=set(),
         value_type=Choice(
-            vocabulary="plone.app.vocabularies.AllowableContentTypes"))
+            vocabulary="Products.Archetypes.AllowableContentTypes"))
 
 #
 # Combined schemata and fieldsets

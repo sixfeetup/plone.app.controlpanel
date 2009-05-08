@@ -4,6 +4,10 @@ Changelog
 2.0
 ---
 
+- Use the AllowedContentTypes and AllowableContentTypes vocabularies from
+  Archetypes.
+  [hannosch]
+
 - Removed dependency on plone.portlets.
   [hannosch]
 
