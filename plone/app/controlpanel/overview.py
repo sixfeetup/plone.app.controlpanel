@@ -60,21 +60,12 @@ class OverviewControlPanel(ControlPanelView):
 
         cp = context.Control_Panel
         var = {}
-        var['Zope'] = cp.version_txt()
         var['Python'] = cp.sys_version()
         var['Platform'] = cp.sys_platform()
         var['Plone Current Configuration'] = current_version
         var['Plone Available Configuartion'] = available_version
         var['Debug mode'] = DevelopmentMode and 'Yes' or 'No'
-        try:
-            from PIL.Image import VERSION
-        except ImportError:
-            VERSION = ''
-        var['PIL'] = VERSION
         return var
-
-    def pil(self):
-        return 'PIL' in self.core_versions()
 
     def version_overview(self):
         core_versions = self.core_versions()
@@ -82,7 +73,7 @@ class OverviewControlPanel(ControlPanelView):
         versions = [
             'Plone ' + plone,
         ]
-        for v in ('Zope', 'Python', 'PIL'):
+        for v in ('Python', ):
             versions.append(v + ' ' + core_versions.get(v))
         return versions
 

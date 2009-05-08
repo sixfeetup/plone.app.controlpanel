@@ -38,16 +38,6 @@
         </dd>
     </dl>
 
-    <dl class="portalMessage warning"
-        tal:condition="not:view/pil">
-        <dt i18n:translate="">
-            Warning
-        </dt>
-        <dd i18n:translate="text_no_pil_installed">
-            Warning: PIL is not installed properly, image scaling will not work.
-        </dd>
-    </dl>
-
     <div class="visualClear"><!-- --></div>
 
     <tal:category tal:repeat="category view/categories">
