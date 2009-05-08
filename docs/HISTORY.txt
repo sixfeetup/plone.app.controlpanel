@@ -4,6 +4,9 @@ Changelog
 2.0
 ---
 
+- Removed the markup control panel, which was tightly bound to Archetypes.
+  [hannosch]
+
 - Use the AllowedContentTypes and AllowableContentTypes vocabularies from
   Archetypes.
   [hannosch]

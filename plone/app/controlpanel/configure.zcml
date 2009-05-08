@@ -10,8 +10,6 @@
 
   <adapter factory=".maintenance.MaintenanceControlPanelAdapter" />
 
-  <adapter factory=".markup.MarkupControlPanelAdapter" />
-
   <adapter factory=".ram.RAMCacheControlPanelAdapter" />
 
   <adapter factory=".search.SearchControlPanelAdapter" />
@@ -55,13 +53,6 @@
       name="mail-controlpanel"
       for="Products.CMFCore.interfaces.ISiteRoot"
       class=".mail.MailControlPanel"
-      permission="cmf.ManagePortal"
-      />
-
-  <browser:page
-      name="markup-controlpanel"
-      for="Products.CMFCore.interfaces.ISiteRoot"
-      class=".markup.MarkupControlPanel"
       permission="cmf.ManagePortal"
       />
 
