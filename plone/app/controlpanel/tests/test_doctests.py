@@ -13,8 +13,7 @@ OPTIONFLAGS = (doctest.ELLIPSIS |
                doctest.NORMALIZE_WHITESPACE)
 
 def test_suite():
-    tests = ['filter.txt',
-             'mail.txt',
+    tests = ['mail.txt',
              'maintenance.txt',
              'search.txt',
              'site.txt',

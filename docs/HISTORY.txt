@@ -4,6 +4,10 @@ Changelog
 2.0
 ---
 
+- Removed the highly confusing filter control panel, which was tightly bound
+  to both Kupu and PortalTransforms.
+  [hannosch]
+
 - Removed the markup control panel, which was tightly bound to Archetypes.
   [hannosch]
 

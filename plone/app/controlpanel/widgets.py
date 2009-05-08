@@ -306,27 +306,3 @@ class MultiSelectTupleWidget(MultiSelectWidget):
         if isinstance(value, list):
             value = tuple(value)
         return value
-
-
-class AllowedTypesWidget(MultiCheckBoxWidget):
-    """ A widget for activating and deactivating mimetypes with special
-        considerations for types
-        whose transformation is not installed locally.
-
-        a format can have the following states:
-
-         1. active (i.e. selected and deselectable)
-         2. inactive (i.e. not selected but selectable)
-         3. deactivated (i.e. not selected and not selectable)
-         4. default (i.e. selected and not deselectable)
-
-        TODO:
-         * computation of state for each format
-         * rendering of those states
-    """
-
-    def __init__(self, field, request):
-        """Initialize the widget."""
-        super(AllowedTypesWidget, self).__init__(field,
-            field.value_type.vocabulary, request)
-
