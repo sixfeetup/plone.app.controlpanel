@@ -13,7 +13,7 @@ from zope.schema import Int
 from Acquisition import aq_inner
 
 from Products.CMFCore.interfaces import ISiteRoot
-from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 
 from plone.app.controlpanel import PloneMessageFactory as _
@@ -68,8 +68,8 @@ class RAMCacheControlPanelAdapter(SchemaAdapterBase):
 
 class RAMCacheControlPanel(ControlPanelForm):
 
-    base_template = ControlPanelForm.template
-    template = ZopeTwoPageTemplateFile('ram.pt')
+    base_template = ViewPageTemplateFile('control-panel.pt')
+    template = ViewPageTemplateFile('ram.pt')
 
     form_fields = form.FormFields(IRAMCacheSchema)
 
