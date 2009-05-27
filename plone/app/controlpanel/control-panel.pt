@@ -125,7 +125,8 @@
                     <legend tal:define="form_name fieldset/label"
                             tal:condition="form_name"
                             tal:attributes="id python:'fieldsetlegend-%s' % fieldset.id"
-                            tal:content="form_name">Form name</legend>
+                            tal:content="form_name"
+                            i18n:translate="">Form name</legend>
 
                     <p i18n:translate=""
                        tal:condition="fieldset/description"
@@ -141,9 +142,9 @@
                              tal:attributes="class python:'field'+(error and ' error' or '')">
 
                             <label i18n:translate=""
-				   tal:define="name widget/name"
+                                   tal:define="name widget/name"
                                    tal:attributes="for widget/associateLabelWithInputControl|name"
-				   tal:content="widget/label">
+                                   tal:content="widget/label">
                                 label
                             </label>
 
