@@ -54,4 +54,3 @@ setup(name='plone.app.controlpanel',
         'Zope2',
       ],
       )
-
