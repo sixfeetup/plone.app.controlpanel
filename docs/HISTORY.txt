@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0
+3.0
 ---
 
 - Added missing i18n:translate statement to fieldset legends.
@@ -56,14 +56,7 @@ Changelog
 - Changed the plone_control_panel to be named overview-controlpanel.
   [hannosch]
 
-- Added dependency declaration on zope.app.cache.
-  [hannosch]
-
 - Removed a dependency on the migration tool for showing version information.
-  [hannosch]
-
-- Removed the dependency on plone.app.form's named_template_adapter, as it
-  does not work with Zope 2.12.
   [hannosch]
 
 - Copied over formlib helper function from CMF default, to avoid a dependency.
@@ -75,6 +68,18 @@ Changelog
 - Removed external editor setting from the site control panel. The software is
   no longer maintained and we should not advertise it.
   [hannosch]
+
+
+2.0 - unreleased
+----------------
+
+- Added dependency declaration on zope.app.cache.
+  [hannosch]
+
+- Removed the dependency on plone.app.form's named_template_adapter, as it
+  does not work with Zope 2.12.
+  [hannosch]
+
 
 1.2.1 - unreleased
 ------------------
