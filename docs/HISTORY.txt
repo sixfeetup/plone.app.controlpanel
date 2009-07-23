@@ -4,6 +4,9 @@ Changelog
 3.0
 ---
 
+- Use `zope.ramcache` in favor of `zope.app.cache`.
+  [hannosch]
+
 - Added missing i18n:translate statement to fieldset legends.
   [hannosch]
 
