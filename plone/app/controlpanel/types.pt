@@ -52,13 +52,13 @@
                       (Default)
                     </option>
                 </select>
-                <noscript>
-                    <input type="submit"
-                           name="form.button.SelectContentType"
-                           class="standalone"
-                           value="Change"
-                           i18n:attributes="value label_change;" />
-                </noscript>
+                <input id='workflow-change'
+                       type="submit"
+                       name="form.button.SelectContentType"
+                       class="standalone"
+                       value="Change"
+                       i18n:attributes="value label_change;" />
+                       <script type="text/javascript">document.getElementById('workflow-change').style.display='none'</script>
            </legend>
 
            <tal:block tal:condition="python:type_id!=''">
@@ -156,7 +156,7 @@
                 </ul>
 
                 <div class="field">
-                    <label for="new_workflow" 
+                    <label for="workflows" 
                            i18n:translate="types_controlpanel_new_workflow">New workflow:</label>
                 
                     <select onchange="form.submit()" id="workflows" name="new_workflow"
@@ -175,13 +175,13 @@
                             tal:attributes="selected python:selected_wf == '[none]' and 'selected' or None"
                             i18n:translate="types_controlpanel_no_workflow">No Workflow</option>
                     </select>
-                    <noscript>
-                        <input type="submit"
-                               name="form.button.SelectWorkflow"
-                               class="standalone"
-                               value="Change"
-                               i18n:attributes="value label_change;">
-                    </noscript>
+                    <input id="new-workflow-change"
+                           type="submit"
+                           name="form.button.SelectWorkflow"
+                           class="standalone"
+                           value="Change"
+                           i18n:attributes="value label_change;" />
+                       <script type="text/javascript">document.getElementById('new-workflow-change').style.display='none'</script>
                 </div>
             
                 <input 
