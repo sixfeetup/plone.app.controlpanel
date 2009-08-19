@@ -130,6 +130,13 @@
       permission="cmf.ManagePortal"
       />
 
+  <browser:page
+      name="actions-controlpanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".actions.ActionsControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
   <view
       type="zope.publisher.interfaces.browser.IBrowserRequest"
       for="zope.schema.interfaces.ITuple
@@ -146,5 +153,61 @@
 
   <subscriber
       handler=".events.handleConfigurationChangedEvent" />
+
+  <!-- utilities for managed action categories-->
+  <utility name="user" factory=".actions.UserActions"/>
+  
+  <utility name="document_actions" factory=".actions.DocumentActions"/>
+  
+  <utility name="site_actions" factory=".actions.SiteActions"/>
+  
+  <utility name="portal_tabs" factory=".actions.PortalTabs"/>
+
+  <!-- edit actions form -->
+  <!-- Default page layout for portal actions add/edit forms -->
+  <adapter
+    for=".actions.IPortalActionsForm"
+    factory=".actions.actions_named_template_adapter"
+    name="default"
+    provides="zope.formlib.namedtemplate.INamedTemplate"
+    />
+
+  <browser:page
+    for="Products.CMFCore.interfaces.IActionCategory"
+    name="add_action_form"
+    class=".actions.AddPortalActionForm"
+    permission="cmf.ManagePortal"
+  />
+
+  <browser:page
+    for="Products.CMFCore.interfaces.IActionCategory"
+    name="delete_portal_action"
+    class=".actions.DeletePortalAction"
+    permission="cmf.ManagePortal"
+  /> 
+  
+  <browser:page
+    for="Products.CMFCore.interfaces.IAction"
+    name="edit_action_form"
+    class=".actions.EditPortalActionForm"
+    permission="cmf.ManagePortal"
+  />
+
+
+  <adapter factory=".actions.PortalActionSchemaAdapter"/>
+
+  <!-- manage actions vocabularies-->
+  <utility
+    component=".actions.PermissionsVocabularyFactory"
+    name="plone.app.controlpanel.SiteWidePermissions"
+    provides="zope.schema.interfaces.IVocabularyFactory"
+    />
+
+  <utility
+    component=".actions.ManagedCategoriesVocabularyFactory"
+    name="plone.app.controlpanel.ManagedActionCategories"
+    provides="zope.schema.interfaces.IVocabularyFactory"
+    />
+
 
 </configure>

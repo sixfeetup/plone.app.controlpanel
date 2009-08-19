@@ -1,0 +1,115 @@
+<metal:block use-macro="context/prefs_main_template/macros/master"
+  i18n:domain="plone">
+
+  <metal:block metal:fill-slot="top_slot"
+    tal:define="dummy python:request.set('disable_border', 1)" />
+
+  <div metal:fill-slot="prefs_configlet_main">
+
+    <h1 class="documentFirstHeading"
+        i18n:translate="heading_actions_controlpanel">Actions configuration</h1>
+
+    <a href=""
+        class="link-parent"
+        tal:attributes="href string:$portal_url/plone_control_panel"
+        i18n:translate="label_up_to_plone_setup">
+            Up to Site Setup
+    </a>
+
+    <p i18n:translate="description_actions_controlpanel">
+        Use this control panel to add, remove or edit existing actions from the available categories.
+    </p>
+
+
+
+    <form method="post" 
+          tal:define="category_id view/category_id;
+                      actions python:view.actionsForCategory(category_id)"
+          tal:attributes="action string:${context/absolute_url}/@@actions-controlpanel">
+
+        <input type="hidden" name="form.submitted:boolean" value="True" />
+        <input type="hidden" name="old_type_id" tal:attributes="value category_id" />
+
+        <fieldset>
+            <legend>
+                <select name="category_id" onchange="form.submit()">
+
+                    <tal:option repeat="selectable view/selectable_categories">
+                        <option tal:content="selectable/title" i18n:translate=""
+                                tal:attributes="value selectable/id;
+                                                selected python:category_id == selectable['id'] and 'selected' or None">
+                                Action category
+                        </option>
+                    </tal:option>
+                    <option
+                        value=""
+                        i18n:translate="label_default_category"
+                        tal:attributes="selected python:category_id == '' and 'selected' or None">
+                      (Select a category)
+                    </option>
+                </select>
+                <noscript>
+                    <input type="submit"
+                           name="form.button.SelectCategory"
+                           class="standalone"
+                           value="Change"
+                           i18n:attributes="value label_change;" />
+                </noscript>
+           </legend>
+           
+           <p tal:condition="not: category_id" i18n:translate="actions_controlpanel_noactions">
+             Actions are grouped into categories. Select the category you which to manage.
+           </p>
+           
+           <p tal:content="view/categoryDescription" tal:condition="category_id"/>
+
+           <table  class="listing nosort controlpanel-listing" tal:condition="actions">
+              <thead>
+                <tr>
+                  <th i18n:translate="">Title</th>
+                  <th i18n:translate="" class="smallcolumn">Visible</th>
+                  <th class="smallcolumn">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tal:actions repeat="action_info actions">
+                  <tr tal:define="oddrow repeat/action_info/odd"
+                    tal:attributes="class python:oddrow and 'odd' or 'even'">
+                    <td>
+                      <a tal:attributes="href action_info/url"
+                        tal:content="action_info/title"/>
+                    </td>
+                    <td tal:content="action_info/visible"/>
+                    <td>
+                      <a tal:attributes="href python:view.getEditURL(action_info)">Edit</a>
+                      <a tal:attributes="href python:view.getDeleteURL(action_info)">Delete</a>
+                    </td>
+                  </tr>
+                </tal:actions>
+              </tbody>
+           </table>
+
+        </fieldset>
+
+    </form>
+    
+    <form name="add-action-form" method="post"
+        tal:attributes="action string:${view/portal_url}/portal_actions/${view/category_id}/add_action_form"
+        tal:condition="view/category_id">
+        
+        <input type="hidden"
+           name="category_id"
+           tal:attributes="value view/category_id"/>
+        
+        <input
+          type="submit"
+          value="Add new action"
+          name="form.button.AddAction"
+          class="standalone"
+          i18n_attributes="value"
+        />
+    </form>
+
+  </div>
+
+</metal:block>
