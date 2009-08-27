@@ -58,7 +58,7 @@
            </legend>
            
            <p tal:condition="not: category_id" i18n:translate="actions_controlpanel_noactions">
-             Actions are grouped into categories. Select the category you which to manage.
+             Actions are grouped into categories. Select the category you wish to manage.
            </p>
            
            <p tal:content="view/categoryDescription" tal:condition="category_id"/>
