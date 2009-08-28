@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xml:lang="en" lang="en"
+      i18n:domain="plone">
+
+  <!-- Various macros intented to the user/groups control panels
+       #########################################################
+
+       $Id$
+
+       ============
+       Content tabs
+       ============
+    -->
+  <metal:contentviewstabs define-macro="contentviewstabs">
+    <ul class="contentViews">
+      <tal:loop repeat="item view/contentViewsTabs">
+        <li tal:attributes="class item/li_class">
+          <a href="#"
+             tal:attributes="href item/link"
+             tal:content="item/label">Title</a>
+        </li>
+      </tal:loop>
+    </ul>
+  </metal:contentviewstabs>
+
+</html>

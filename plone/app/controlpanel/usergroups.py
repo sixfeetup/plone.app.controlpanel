@@ -1,5 +1,10 @@
-from Acquisition import aq_inner
+# -*- coding: utf-8 -*-
+# $Id$
+"""Users and groups control panel"""
+
+import urlparse
 from itertools import chain
+from Acquisition import aq_inner
 
 from zope.interface import Interface
 from zope.component import adapts
@@ -8,16 +13,19 @@ from zope.formlib.form import FormFields
 from zope.interface import implements
 from zope.schema import Bool
 
-from plone.memoize.instance import memoize, clearafter
 from plone.protect import CheckAuthenticator
 from Products.CMFCore.utils import getToolByName
 from Products.CMFDefault.formlib.schema import ProxyFieldProperty
 from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from Products.CMFPlone import Batch
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from form import ControlPanelForm, ControlPanelView
+
+
+BATCH_SIZE = 20
 
 
 class IUserGroupsSettingsSchema(Interface):
@@ -57,10 +65,53 @@ class UserGroupsSettingsControlPanelAdapter(SchemaAdapterBase):
     many_users = ProxyFieldProperty(IUserGroupsSettingsSchema['many_users'])
 
 
-class UserGroupsSettingsControlPanel(ControlPanelForm):
+class BaseUserGroupsControlPanel(object):
+    """Resources for all control panels
+    """
+
+    ursergroups_controlpanel_macros = ViewPageTemplateFile('usergroups_controlpanel_macros.pt').macros
+
+    def contentViewsTabs(self):
+        """Data for 'contentviewstabs' macro:
+        Any subclass could override returning:
+        [{'label': (translated) tab title,
+          'link': target url,
+          'li_class': 'selected' for actual tab otherwise None
+        """
+        this_view = urlparse.urlsplit(self.request.URL)[2].split('/')[-1]
+        tab_infos = [
+            {'label': _(u'label_users', default=u"Users"),
+             'link': '@@usergroup-userprefs'},
+            {'label': _(u'label_groups', default=u"Groups"),
+             'link': '@@usergroup-groupprefs'},
+            {'label': _(u'label_usergroup_settings', default=u"Settings"),
+             'link': '@@usergroup-controlpanel'}
+            ]
+        for ti in tab_infos:
+            ti['li_class'] = 'selected' if ti['link'] == this_view else None
+        return tab_infos
+
+
+    def processSearch(self):
+        """Search relevant principals
+        """
+        request = self.request
+        raw_results = self.doSearch(self.searchString)
+        b_size = int(request.get('b_size', BATCH_SIZE))
+        self.searchResults = Batch(raw_results, b_size, self.b_start, orphan=1)
+        return
+
+
+    def doSearch(self, searchstring):
+        """Must be provided by subclasses
+        """
+        raise NotImplementedError('Subclass BaseUserGroupsControlPanel and provide doSearch methos')
+
+
+class UserGroupsSettingsControlPanel(ControlPanelForm, BaseUserGroupsControlPanel):
 
     base_template = ControlPanelForm.template
-    template = ZopeTwoPageTemplateFile('usergroupssettings.pt')
+    template = ViewPageTemplateFile('usergroupssettings.pt')
 
     form_fields = FormFields(IUserGroupsSettingsSchema)
 
@@ -69,15 +120,16 @@ class UserGroupsSettingsControlPanel(ControlPanelForm):
     form_name = _("User/Groups settings")
 
 
-class UsersOverviewControlPanel(ControlPanelView):
+class UsersOverviewControlPanel(ControlPanelView, BaseUserGroupsControlPanel):
 
     def __call__(self):
 
         form = self.request.form
         submitted = form.get('form.submitted', False)
         findAll = form.get('form.button.FindAll', None) is not None
+        self.b_start = int(self.request.get('b_start', 0))
         self.searchString = not findAll and form.get('searchstring', '') or ''
-        self.searchResults = []
+        self.searchResults = Batch([], 0, 0, orphan=1)
         if submitted:
             if form.get('form.button.Modify', None) is not None:
                 self.manageUser(form.get('users', None),
@@ -86,7 +138,7 @@ class UsersOverviewControlPanel(ControlPanelView):
 
         # Only search for all ('') if the many_users flag is not set.
         if not(self.many_users) or bool(self.searchString):
-            self.searchResults = self.doSearch(self.searchString)
+            self.processSearch()
 
         return self.index()
 
@@ -149,14 +201,15 @@ class UsersOverviewControlPanel(ControlPanelView):
         return [r for r in pmemb.getPortalRoles() if r != 'Owner']
 
 
-class GroupsOverviewControlPanel(ControlPanelView):
+class GroupsOverviewControlPanel(ControlPanelView, BaseUserGroupsControlPanel):
 
     def __call__(self):
         form = self.request.form
         submitted = form.get('form.submitted', False)
         findAll = form.get('form.button.FindAll', None) is not None
+        self.b_start = int(self.request.get('b_start', 0))
         self.searchString = not findAll and form.get('searchstring', '') or ''
-        self.searchResults = []
+        self.searchResults = Batch([], 0, 0, orphan=1)
         if submitted:
             if form.get('form.button.Modify', None) is not None:
                 self.manageGroup([group[len('group_'):] for group in self.request.keys() if group.startswith('group_')],
@@ -164,7 +217,7 @@ class GroupsOverviewControlPanel(ControlPanelView):
 
         # Only search for all ('') if the many_users flag is not set.
         if not(self.many_groups) or bool(self.searchString):
-            self.searchResults = self.doSearch(self.searchString)
+            self.processSearch()
 
         return self.index()
 

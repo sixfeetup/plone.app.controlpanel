@@ -1,0 +1,25 @@
+=======
+Changes
+=======
+
+Changes in branch https://svn.plone.org/svn/plone/plone.app.controlpanel/branches/esteele-usersconfig
+
+Done
+====
+
+* Refactoring base control panels:
+
+  - more python,
+  - less ZPT, and removed useless expresions.
+  - macros for common stuffs
+
+To do
+=====
+
+* Optims:
+
+  - Use "tool" view to get tools when possible
+
+* Refactor User forms the zope 3 way
+
+* Refactor Group forms the zope 3 way

@@ -143,8 +143,8 @@
       name="usergroup-controlpanel"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".usergroups.UserGroupsSettingsControlPanel"
-      permission="cmf.ManagePortal"
-      />
+     permission="cmf.ManagePortal"
+     />
 
   <view
       type="zope.publisher.interfaces.browser.IBrowserRequest"
