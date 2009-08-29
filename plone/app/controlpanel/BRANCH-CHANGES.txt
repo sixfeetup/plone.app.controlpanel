@@ -13,12 +13,12 @@ Done
   - less ZPT, and removed useless expresions.
   - macros for common stuffs
 
+* Low level optims when building users/groups rows
+
 To do
 =====
 
 * Optims:
-
-  - Use "tool" view to get tools when possible
 
 * Refactor User forms the zope 3 way
 
