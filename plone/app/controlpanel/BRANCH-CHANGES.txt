@@ -23,3 +23,14 @@ To do
 * Refactor User forms the zope 3 way
 
 * Refactor Group forms the zope 3 way
+
+Issues
+======
+
+Group titles
+------------
+
+We can change group titles but they don't appear in the properties returned
+by the "pas_search" utility. From that view title = id = groupid :/
+
+We need to access the real group titles.

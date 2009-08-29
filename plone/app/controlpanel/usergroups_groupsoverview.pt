@@ -2,7 +2,7 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
+      xml:lang="en" lang="en"
       metal:use-macro="context/prefs_main_template/macros/master"
       i18n:domain="plone">
 
@@ -16,13 +16,12 @@
        tal:define="template_id string:@@usergroup-groupprefs;
                    portal_roles view/portal_roles;
                    batch view/searchResults;
-                   portal_url context/portal_url;
-                   ztu modules/ZTUtils;">
+                   portal_url context/portal_url">
 
 
     <div id="region-content" class="documentEditable">
 
-      <metal:contentviewstabs use-macro="view/ursergroups_controlpanel_macros/contentviewstabs" />
+      <metal:contentviewstabs use-macro="view/usergroups_controlpanel_macros/contentviewstabs" />
 
       <div class="contentActions">
         &nbsp;
@@ -39,12 +38,7 @@
           <h1 class="documentFirstHeading"
               i18n:translate="heading_groups_overview">Groups Overview</h1>
 
-          <a href=""
-             class="link-parent"
-             tal:attributes="href string:$portal_url/plone_control_panel"
-             i18n:translate="label_up_to_plone_setup">
-            Up to Site Setup
-          </a>
+          <metal:linktoploneconfig use-macro="view/usergroups_controlpanel_macros/linktoploneconfig" />
 
           <p i18n:translate="description_groups_management"
              class="discreet">
@@ -56,7 +50,7 @@
           </p>
 
           <p i18n:translate="description_pas_group_listing"
-             tal:condition="python:not (site_properties.many_groups or view.searchString) and not context.acl_users.canListAllGroups()">
+             tal:condition="view/warn_groups_listing">
             Note: Some or all of your PAS groups
             source plugins do not allow listing of groups, so you
             may not see the groups defined by those plugins unless
@@ -119,7 +113,7 @@
                          name="form.button.FindAll"
                          value="Show all"
                          i18n:attributes="value label_showall;"
-                         tal:condition="not:site_properties/many_groups"
+                         tal:condition="not:view/many_groups"
                          />
 
                   <input type="hidden"
@@ -158,40 +152,38 @@
                   </tal:header>
                 </tr>
 
-                <tal:block repeat="group_info batch">
-                  <tr tal:define="oddrow repeat/group_info/odd;
-                                  roles python:['this'];
-                                  group python:context.acl_users.getGroupById(group_info['groupid']);"
-                      tal:attributes="class python:oddrow and 'odd' or 'even'">
+                <tal:block
+                   define="group_icon_png context/portal_url/group.png"
+                   repeat="this_group batch">
+                  <tr tal:define="oddrow repeat/this_group/odd"
+                      tal:attributes="class python:'odd' if oddrow else 'even'">
 
                     <td>
                       <input type="hidden"
                              name=""
-                             tal:attributes="name string:group_${group_info/groupid}:list"
+                             tal:attributes="name this_group/hidden_input_name"
                              value=""
                              />
+                     <a href="#"
+                         tal:attributes="href this_group/group_details_link;
+                                         title this_group/id_and_title">
 
-                      <a href="#"
-                         tal:attributes="href python:portal_url+'/prefs_group_members?'+ztu.make_query(groupname=group_info['groupid']);
-                                         title group_info/title|group_info/groupid">
-
-                        <tal:block replace="structure context/portal_url/group.png" />&nbsp;
-                        <tal:group tal:replace="group_info/title|group_info/groupid" />
+                        <tal:block replace="structure group_icon_png" />&nbsp;
+                        <tal:group tal:replace="this_group/title_or_id" />
                       </a>
                     </td>
 
                     <td class="listingCheckbox"
-                        tal:define="group_roles python:group.getRoles();"
-                        tal:repeat="portal_role portal_roles">
+                        tal:repeat="role_infos this_group/roles_subform_view">
 
                       <input type="checkbox"
                              class="noborder"
                              name="name"
                              value="Manager"
-                             tal:attributes="name string:group_${group_info/groupid}:list;
-                                             value portal_role;
-                                             checked python:portal_role in group_roles and 'checked' or nothing;
-                                             disabled python:group.canAssignRole(portal_role) and default or 'disabled'"
+                             tal:attributes="name role_infos/checkbox_input_name;
+                                             value role_infos/role_name;
+                                             checked role_infos/role_checked;
+                                             disabled role_infos/set_role_disabled"
                              />
                     </td>
 
@@ -200,8 +192,8 @@
                              class="noborder notify"
                              name="delete:list"
                              value="value"
-                             tal:attributes="value group_info/groupid;
-                                             disabled python:group.canDelete() and default or 'disabled'"
+                             tal:attributes="value this_group/groupid;
+                                             disabled this_group/group_delete_disabled"
                              />
                     </td>
                   </tr>

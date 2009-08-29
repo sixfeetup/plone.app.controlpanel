@@ -26,4 +26,17 @@
     </ul>
   </metal:contentviewstabs>
 
+  <!-- ====================
+       Link to plone config
+       ====================
+    -->
+
+  <metal:linktoploneconfig define-macro="linktoploneconfig">
+    <a href=""
+       class="link-parent"
+       tal:attributes="href string:$portal_url/plone_control_panel"
+       i18n:translate="label_up_to_plone_setup">
+      Up to Site Setup
+    </a>
+  </metal:linktoploneconfig>
 </html>

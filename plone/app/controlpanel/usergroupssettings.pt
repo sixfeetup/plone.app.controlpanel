@@ -16,7 +16,7 @@
 
     <div id="region-content" class="documentEditable">
 
-      <metal:contentviewstabs use-macro="view/ursergroups_controlpanel_macros/contentviewstabs" />
+      <metal:contentviewstabs use-macro="view/usergroups_controlpanel_macros/contentviewstabs" />
 
       <div class="contentActions">
         &nbsp;
@@ -36,12 +36,7 @@
           <h1 class="documentFirstHeading"
               i18n:translate="heading_usergroup_settings">User/Groups Settings</h1>
 
-          <a href=""
-             class="link-parent"
-             tal:attributes="href string:$portal_url/plone_control_panel"
-             i18n:translate="label_up_to_plone_setup">
-            Up to Site Setup
-          </a>
+          <metal:linktoploneconfig use-macro="view/usergroups_controlpanel_macros/linktoploneconfig" />
 
           <metal:block use-macro="view/base_template/macros/master" />
 

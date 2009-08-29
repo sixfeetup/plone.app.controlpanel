@@ -2,7 +2,7 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
+      xml:lang="en" lang="en"
       metal:use-macro="context/prefs_main_template/macros/master"
       i18n:domain="plone">
 
@@ -15,11 +15,11 @@
   <div metal:fill-slot="prefs_configlet_content"
        tal:define="template_id string:@@usergroup-userprefs;
                    portal_roles view/portal_roles;
-                   portal_url context/portal_url;">
+                   portal_url context/portal_url">
 
     <div id="region-content" class="documentEditable">
 
-      <metal:contentviewstabs use-macro="view/ursergroups_controlpanel_macros/contentviewstabs" />
+      <metal:contentviewstabs use-macro="view/usergroups_controlpanel_macros/contentviewstabs" />
 
       <div class="contentActions">
         &nbsp;
@@ -36,12 +36,7 @@
           <h1 class="documentFirstHeading"
               i18n:translate="heading_users_overview">Users Overview</h1>
 
-          <a href=""
-             class="link-parent"
-             tal:attributes="href string:$portal_url/plone_control_panel"
-             i18n:translate="label_up_to_plone_setup">
-            Up to Site Setup
-          </a>
+          <metal:linktoploneconfig use-macro="view/usergroups_controlpanel_macros/linktoploneconfig" />
 
           <p i18n:translate="description_user_management">
             Click the user's name to see and change the details of a
@@ -115,7 +110,7 @@
                          />
                 </th>
               </tr>
-              <tal:block tal:condition="batch" >
+              <tal:block tal:condition="python:batch.length" >
                 <tr>
                   <th rowspan="2" i18n:translate="listingheader_user_name">User name</th>
                   <th rowspan="2" i18n:translate="listingheader_email_address">E-mail Address</th>
@@ -129,50 +124,52 @@
                 </tr>
               </tal:block>
 
-              <tal:block repeat="this_user batch">
-                <tr tal:define="oddrow repeat/this_user/odd;
-                                userid this_user/userid;
-                                mq python:modules['ZTUtils'].make_query;
-                                userquery python:mq(userid=userid);
-                                user python:context.portal_membership.getMemberById(userid)"
-                    tal:condition="python:user is not None"
-                    tal:attributes="class python:oddrow and 'odd' or 'even'">
+              <!-- Looping on users -->
 
-                  <td>
+              <tal:block
+                 define="user_icon_png context/portal_url/user.png;
+                         mail_icon_png context/mail_icon.png"
+                 repeat="this_user batch">
+               <tr tal:define="oddrow repeat/this_user/odd;
+                                userid this_user/userid"
+                    tal:condition="this_user/is_valid_user"
+                    tal:attributes="class python:'odd' if oddrow else 'even'">
+                 <td>
                     <a href="prefs_user_details"
-                       tal:attributes="href string:$portal_url/prefs_user_details?${userquery}">
-                      <tal:block replace="structure context/portal_url/user.png"/>&nbsp;<span tal:replace="userid">username</span>
-                      (<span tal:replace="python:user.getProperty('fullname')">Full Name</span>)
+                       tal:attributes="href this_user/user_details_link">
+                      <tal:block
+                         replace="structure user_icon_png"
+                         />&nbsp;<span tal:replace="this_user/id_and_fullname">username (full name)</span>
                     </a>
                     <input type="hidden" name="users.id:records" tal:attributes="value userid" />
                   </td>
 
-                  <td tal:define="email python:user.getProperty('email')">
+                  <td tal:define="email this_user/email">
                     <a href="#"
                        class="link-plain"
                        tal:attributes="href string:mailto:${email}"
                        title="Send a mail to this user"
                        i18n:attributes="title title_send_mail_to_user;"
-                       ><tal:block replace="structure context/mail_icon.png"/></a>
+                       ><tal:block replace="structure mail_icon_png"/></a>
                     <input style="margin:2px;"
                            type="text"
                            size="15"
                            name="users.email:records"
                            value=""
                            tal:attributes="value email;
-                                           disabled python:user.canWriteProperty('email') and default or 'disabled'" />
+                                           disabled this_user/set_email_disabled" />
                   </td>
 
                   <td class="listingCheckbox"
-                      tal:define="user_roles user/getRoles"
-                      tal:repeat="portal_role portal_roles">
+                      tal:repeat="role_infos this_user/roles_subform_view">
                     <input type="checkbox"
                            class="noborder"
                            name="users.roles:list:records"
                            value="Manager"
-                           tal:attributes="value portal_role;
-                                           checked python:portal_role in user_roles and 'checked' or None;
-                                           disabled python:user.canAssignRole(portal_role) and default or 'disabled'" />
+                           tal:attributes="value role_infos/role_name;
+                                           checked role_infos/role_checked;
+                                           disabled role_infos/set_role_disabled"
+                           />
                   </td>
 
                   <td class="listingCheckbox">
@@ -181,7 +178,7 @@
                            name="users.resetpassword:records"
                            value=""
                            tal:attributes="value userid;
-                                           disabled python:user.canPasswordSet() and default or 'disabled'" />
+                                           disabled this_user/set_password_disabled" />
                   </td>
 
                   <td class="listingCheckbox">
@@ -190,11 +187,11 @@
                            name="delete:list"
                            value=""
                            tal:attributes="value userid;
-                                           disabled python:user.canDelete() and default or 'disabled'" />
+                                           disabled this_user/user_delete_disabled" />
                   </td>
                 </tr>
               </tal:block>
-              <tr tal:condition="not:batch">
+              <tr tal:condition="python:batch.length == 0">
                 <td tal:condition="view/searchString"
                     i18n:translate="text_nomatches"
                     style="text-align:center;">No matches</td>
