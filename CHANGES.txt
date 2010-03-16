@@ -4,6 +4,11 @@ Changelog
 2.0b5 - unreleased
 ------------------
 
+- An empty value is now valid for the password field for the mail
+  server.
+  Refs http://dev.plone.org/plone/ticket/9689
+  [dukebody]
+
 - Fixed various i18n issues.
   [vincentfretin]
 

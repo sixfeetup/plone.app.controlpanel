@@ -108,15 +108,13 @@ class MailControlPanelAdapter(SchemaAdapterBase):
                        getattr(self.context, 'smtp_pwd', None))
 
     def set_smtp_pass(self, value):
-        # Don't update the value, if we don't get a new one
-        if value is not None:
-            if safe_hasattr(self.context, 'smtp_pass'):
-                self.context.smtp_pass = value
-                #SecureMailhost 1.x also uses this:
-                if safe_hasattr(self.context, '_smtp_pass'):
-                    self.context._smtp_pass = value
-            elif safe_hasattr(self.context, 'smtp_pwd'):
-                self.context.smtp_pwd = value
+        if safe_hasattr(self.context, 'smtp_pass'):
+            self.context.smtp_pass = value
+            #SecureMailhost 1.x also uses this:
+            if safe_hasattr(self.context, '_smtp_pass'):
+                self.context._smtp_pass = value
+        elif safe_hasattr(self.context, 'smtp_pwd'):
+            self.context.smtp_pwd = value
 
     smtp_pass = property(get_smtp_pass, set_smtp_pass)
 
