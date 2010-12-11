@@ -155,6 +155,12 @@ class TypesControlPanel(ControlPanelView):
 
                     remap_workflow(context, type_ids=type_ids, chain=chain,
                                    state_map=state_map)
+                    
+                    from zope.event import notify
+                    from plone.app.controlpanel.events import ConfigurationChangedEvent
+                    data = {'workflow': new_wf}
+                    notify(ConfigurationChangedEvent(self, data))
+                
                 else:
                     portal_workflow = getToolByName(context, 'portal_workflow')
                     if self.new_workflow()=='(Default)':
