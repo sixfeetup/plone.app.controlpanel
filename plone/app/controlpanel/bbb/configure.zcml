@@ -67,11 +67,18 @@
     handler=".security.syncPloneAppRegistryToSecurityPortalProperties"
     />
 
+  <subscriber
+    for="plone.app.controlpanel.interfaces.ISkinsSchema
+         plone.registry.interfaces.IRecordModifiedEvent"
+    handler=".skins.syncPloneAppRegistryToSkinsProperties"
+    />
+
   <!-- Adapter  -->
   <adapter factory=".calendar.CalendarControlPanelAdapter" />
   <adapter factory=".editing.EditingControlPanelAdapter" />
   <adapter factory=".mail.MailControlPanelAdapter" />
   <adapter factory=".navigation.NavigationControlPanelAdapter" />
   <adapter factory=".security.SecurityControlPanelAdapter" />
+  <adapter factory=".skins.SkinsControlPanelAdapter" />
 
 </configure>
