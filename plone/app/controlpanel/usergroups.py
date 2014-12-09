@@ -669,6 +669,8 @@ class GroupMembershipControlPanel(UsersGroupsControlPanelView):
         self.searchString = ''
         self.newSearch = False
 
+        batchNavRequest = form.get('b_start', None) is not None and True or False
+
         if submitted:
             # add/delete before we search so we don't show stale results
             toAdd = form.get('add', [])
@@ -696,7 +698,7 @@ class GroupMembershipControlPanel(UsersGroupsControlPanelView):
             if findAll or edit or add:
                 form['searchstring'] = ''
             self.searchString = form.get('searchstring', '')
-            if findAll or bool(self.searchString):
+            if findAll or bool(self.searchString) or batchNavRequest:
                 self.searchResults = self.getPotentialMembers(self.searchString)
 
             if search or findAll:

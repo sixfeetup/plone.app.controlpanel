@@ -259,8 +259,10 @@ Users/Groups can be removed from this list as well.
     >>> self.browser.getControl(name='form.button.Edit').click()
     >>> 'Changes made' in self.browser.contents
     True
-    >>> 'Abigail Simmons' in self.browser.contents
-    False
+    >>> self.browser.contents
+    '...Current group members...
+    ...Search for new group members...
+    ...Abigail Simmons...(XYsmd7ux)...'
 
 Open the groups overview, make sure Group 1 and Group 2 don't have globally-assigned roles
     >>> self.browser.getLink('Group Members').click()
@@ -346,8 +348,10 @@ Users/Groups they can be removed from this list as well.
     >>> self.browser.getControl(name='form.button.Edit').click()
     >>> 'Changes made' in self.browser.contents
     True
-    >>> 'Abigail Simmons' in self.browser.contents
-    False
+    >>> self.browser.contents
+    '...Current group members...
+    ...Search for new group members...
+    ...Abigail Simmons...(XYsmd7ux)...'
 
 Groups nested within groups assigned to this one should not be displayed
     >>> self.browser.getLink('Group 2').click()
