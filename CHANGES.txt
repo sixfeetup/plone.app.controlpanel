@@ -1,6 +1,15 @@
 Changelog
 =========
 
+2.2.13-unreleased (2014-12-08)
+-------------------
+
+- Fix handling of Batch navigation for group membership control panel. 
+  Previously clicking any Batch navigation link would return to a page with no
+  potential members showing, making it impossible to navigate beyond the first
+  page of potential members listed. Updated tests.
+  [bryanlandia]
+
 2.2.12 (2013-08-14)
 -------------------
 
